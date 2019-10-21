@@ -47,31 +47,17 @@ public class ToDoItemRepository {
     }
     public List<ToDoItem> readToDoItem(){
         String sql = "SELECT * FROM to_do_item";
-//        try(Connection connection = DataBaseConfiguration.getConnection();
-//            Statement preparedStatement = connection.createStatement()){
-//            ResultSet resultSet = preparedStatement.executeQuery(sql);
-//            while(resultSet.next()){
-//                System.out.println(resultSet.getString("description"));
-//            }
-//        }
-//        catch (SQLException | IOException | ClassNotFoundException e){
-//            e.printStackTrace();
-//        }
+
         List<ToDoItem> toDoItems = new ArrayList<>();
         try(Connection connection = DataBaseConfiguration.getConnection();
             Statement preparedStatement = connection.createStatement()){
             ResultSet resultSet = preparedStatement.executeQuery(sql);
             while(resultSet.next()){
-                long id = resultSet.getLong("id");
-                String description = resultSet.getString("description");
-                LocalDate deadLine = resultSet.getDate("deadline").toLocalDate();
-                boolean done = resultSet.getBoolean("done");
-
                 ToDoItem toDoItem = new ToDoItem();
-                toDoItem.setId(id);
-                toDoItem.setDeadline(deadLine);
-                toDoItem.setDescription(description);
-                toDoItem.setDone(done);
+                toDoItem.setId(resultSet.getLong("id"));
+                toDoItem.setDeadline(resultSet.getDate("deadline").toLocalDate());
+                toDoItem.setDescription(resultSet.getString("description"));
+                toDoItem.setDone(resultSet.getBoolean("done"));
 
                 toDoItems.add(toDoItem);
 
@@ -81,5 +67,25 @@ public class ToDoItemRepository {
             e.printStackTrace();
         }
         return toDoItems;
+    }
+    public ToDoItem readToDoItem(long id){
+        String sql = "SELECT * FROM to_do_item WHERE id=?";
+        ToDoItem toDoItem = new ToDoItem();
+
+        try(Connection connection = DataBaseConfiguration.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setLong(1,id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                toDoItem.setId(resultSet.getLong("id"));
+                toDoItem.setDeadline(resultSet.getDate("deadline").toLocalDate());
+                toDoItem.setDescription(resultSet.getString("description"));
+                toDoItem.setDone(resultSet.getBoolean("done"));
+            }
+        }
+        catch (SQLException | IOException | ClassNotFoundException e){
+            e.printStackTrace();
+        }
+        return toDoItem;
     }
 }

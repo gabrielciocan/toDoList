@@ -23,11 +23,13 @@ public class App
         createToDoItemRequest.setDeadline(LocalDate.now().plusWeeks(1));
 
 //        toDoItemRepository.createToDoItem(createToDoItemRequest);
-//        toDoItemRepository.updateToDoItem(2,true);
+//        toDoItemRepository.updateToDoItem(5,true);
 //        toDoItemRepository.deleteToDoItem(4);
         List<ToDoItem> toDoItems = toDoItemRepository.readToDoItem();
         for(ToDoItem toDoItem:toDoItems){
             System.out.println(toDoItem);
         }
+        System.out.println("Returning by id:");
+        System.out.println(toDoItemRepository.readToDoItem(5));
     }
 }
