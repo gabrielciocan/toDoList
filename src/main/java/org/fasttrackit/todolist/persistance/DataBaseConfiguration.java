@@ -11,19 +11,25 @@ public class DataBaseConfiguration {
 
     public static Connection getConnection() throws IOException, SQLException, ClassNotFoundException {
         Properties properties = new Properties();
-        InputStream fileInputStream = DataBaseConfiguration.class.getClassLoader().getResourceAsStream("db.properties");
-
-        try {
+//        InputStream fileInputStream = DataBaseConfiguration.class.getClassLoader().getResourceAsStream("db.properties")
+//        try {
+//            properties.load(fileInputStream);
+//            Class.forName(properties.getProperty("DB_DRIVER_CLASS"));
+//            return DriverManager.getConnection(properties.getProperty("DB_URL")
+//                    ,properties.getProperty("DB_USERNAME")
+//                    ,properties.getProperty("DB_PASSWORD"));
+//        } finally {
+//            //Closing input stream to free up memory
+//            if(fileInputStream != null){
+//                fileInputStream.close();
+//            }
+//        }
+        try(InputStream fileInputStream = DataBaseConfiguration.class.getClassLoader().getResourceAsStream("db.properties")){
             properties.load(fileInputStream);
             Class.forName(properties.getProperty("DB_DRIVER_CLASS"));
             return DriverManager.getConnection(properties.getProperty("DB_URL")
                     ,properties.getProperty("DB_USERNAME")
                     ,properties.getProperty("DB_PASSWORD"));
-        } finally {
-            //Closing input stream to free up memory
-            if(fileInputStream != null){
-                fileInputStream.close();
-            }
         }
 
     }

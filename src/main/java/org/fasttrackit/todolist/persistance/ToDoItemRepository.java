@@ -1,6 +1,5 @@
 package org.fasttrackit.todolist.persistance;
 
-import org.fasttrackit.todolist.domain.ToDoItem;
 import org.fasttrackit.todolist.transfer.CreateToDoItemRequest;
 
 import java.io.IOException;
