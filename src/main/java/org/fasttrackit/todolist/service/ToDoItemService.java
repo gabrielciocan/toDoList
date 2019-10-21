@@ -15,7 +15,6 @@ public class ToDoItemService {
 
     public void createToDoItem(CreateToDoItemRequest createToDoItemRequest) throws SQLException, IOException, ClassNotFoundException {
         System.out.println("Creating to-do-item: " + createToDoItemRequest);
-
         toDoItemRepository.createToDoItem(createToDoItemRequest);
     }
     public void updateToDoItem(long id, UpdateToDoItemRequest updateToDoItemRequest){
