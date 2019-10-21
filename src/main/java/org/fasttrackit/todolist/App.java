@@ -3,6 +3,7 @@ package org.fasttrackit.todolist;
 import org.fasttrackit.todolist.domain.ToDoItem;
 import org.fasttrackit.todolist.persistance.ToDoItemRepository;
 import org.fasttrackit.todolist.transfer.CreateToDoItemRequest;
+import org.fasttrackit.todolist.transfer.UpdateToDoItemRequest;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -23,8 +24,15 @@ public class App
         createToDoItemRequest.setDeadline(LocalDate.now().plusWeeks(1));
 
 //        toDoItemRepository.createToDoItem(createToDoItemRequest);
-//        toDoItemRepository.updateToDoItem(5,true);
+
+
+        UpdateToDoItemRequest updateToDoItemRequest = new UpdateToDoItemRequest();
+        updateToDoItemRequest.setDone(true);
+        updateToDoItemRequest.setDescription(createToDoItemRequest.getDescription());
+        updateToDoItemRequest.setDeadline(createToDoItemRequest.getDeadline());
+        toDoItemRepository.updateToDoItem(6,updateToDoItemRequest);
 //        toDoItemRepository.deleteToDoItem(4);
+        toDoItemRepository.readToDoItem();
         List<ToDoItem> toDoItems = toDoItemRepository.readToDoItem();
         for(ToDoItem toDoItem:toDoItems){
             System.out.println(toDoItem);
