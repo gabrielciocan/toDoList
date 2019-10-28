@@ -6,7 +6,6 @@ import org.fasttrackit.todolist.transfer.UpdateToDoItemRequest;
 
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class ToDoItemRepository {
             preparedStatement.executeUpdate();
         }
     }
-    public void updateToDoItem(long id, UpdateToDoItemRequest updateToDoItemRequest){
+    public void updateToDoItem(long id, UpdateToDoItemRequest updateToDoItemRequest) throws SQLException, IOException, ClassNotFoundException {
         String sql = "UPDATE to_do_item SET done=?,description=?,deadline=? WHERE id=?";
 
         try(Connection connection = DataBaseConfiguration.getConnection();
@@ -33,22 +32,17 @@ public class ToDoItemRepository {
             preparedStatement.setLong(4,id);
             preparedStatement.executeUpdate();
         }
-        catch (SQLException | IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
     }
-    public void deleteToDoItem(long id){
+    public void deleteToDoItem(long id) throws SQLException, IOException, ClassNotFoundException {
         String sql = "DELETE FROM to_do_item WHERE id=?";
         try(Connection connection = DataBaseConfiguration.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql)){
             preparedStatement.setLong(1,id);
             preparedStatement.executeUpdate();
         }
-        catch (SQLException | IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
+
     }
-    public List<ToDoItem> readToDoItem(){
+    public List<ToDoItem> readToDoItem() throws SQLException, IOException, ClassNotFoundException {
         String sql = "SELECT * FROM to_do_item";
 
         List<ToDoItem> toDoItems = new ArrayList<>();
@@ -66,12 +60,9 @@ public class ToDoItemRepository {
 
             }
         }
-        catch (SQLException | IOException | ClassNotFoundException e){
-            e.printStackTrace();
-        }
         return toDoItems;
     }
-    public ToDoItem readToDoItem(long id){
+    public ToDoItem readToDoItem(long id) throws SQLException, IOException, ClassNotFoundException {
         String sql = "SELECT * FROM to_do_item WHERE id=?";
         ToDoItem toDoItem = new ToDoItem();
 
@@ -85,9 +76,6 @@ public class ToDoItemRepository {
                 toDoItem.setDescription(resultSet.getString("description"));
                 toDoItem.setDone(resultSet.getBoolean("done"));
             }
-        }
-        catch (SQLException | IOException | ClassNotFoundException e){
-            e.printStackTrace();
         }
         return toDoItem;
     }
