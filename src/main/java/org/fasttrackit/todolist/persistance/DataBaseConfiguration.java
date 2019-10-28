@@ -24,12 +24,12 @@ public class DataBaseConfiguration {
 //                fileInputStream.close();
 //            }
 //        }
-        try(InputStream fileInputStream = DataBaseConfiguration.class.getClassLoader().getResourceAsStream("db.properties")){
+        try (InputStream fileInputStream = DataBaseConfiguration.class.getClassLoader().getResourceAsStream("db.properties")) {
             properties.load(fileInputStream);
             Class.forName(properties.getProperty("DB_DRIVER_CLASS"));
             return DriverManager.getConnection(properties.getProperty("DB_URL")
-                    ,properties.getProperty("DB_USERNAME")
-                    ,properties.getProperty("DB_PASSWORD"));
+                    , properties.getProperty("DB_USERNAME")
+                    , properties.getProperty("DB_PASSWORD"));
         }
 
     }

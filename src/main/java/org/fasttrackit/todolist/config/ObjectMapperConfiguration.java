@@ -5,10 +5,12 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 public class ObjectMapperConfiguration {
     private static ObjectMapper objectMapper = new ObjectMapper();
-    static{
+
+    static {
         objectMapper.registerModule(new JavaTimeModule());
     }
-    public static ObjectMapper getObjectMapper(){
+
+    public static ObjectMapper getObjectMapper() {
         return objectMapper;
     }
 }

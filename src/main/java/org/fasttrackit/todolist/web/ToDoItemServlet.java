@@ -25,12 +25,12 @@ public class ToDoItemServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CreateToDoItemRequest createToDoItemRequest =
-                ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(),CreateToDoItemRequest.class);
+                ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(), CreateToDoItemRequest.class);
 
         try {
             toDoItemService.createToDoItem(createToDoItemRequest);
-        } catch (SQLException|ClassNotFoundException e) {
-            resp.sendError(500,"Internal server error: " + e.getMessage());
+        } catch (SQLException | ClassNotFoundException e) {
+            resp.sendError(500, "Internal server error: " + e.getMessage());
         }
     }
 
@@ -38,22 +38,22 @@ public class ToDoItemServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long id = Long.parseLong(req.getParameter("id"));
         UpdateToDoItemRequest updateToDoItemRequest =
-                ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(),UpdateToDoItemRequest.class);
-        try{
-            toDoItemService.updateToDoItem(id,updateToDoItemRequest);
+                ObjectMapperConfiguration.getObjectMapper().readValue(req.getReader(), UpdateToDoItemRequest.class);
+        try {
+            toDoItemService.updateToDoItem(id, updateToDoItemRequest);
         } catch (SQLException | ClassNotFoundException e) {
-            resp.sendError(500,"Internal server error: " + e.getMessage());
+            resp.sendError(500, "Internal server error: " + e.getMessage());
         }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long id = Long.parseLong(req.getParameter("id"));
-        try{
+        try {
             toDoItemService.deleteToDoItem(id);
 
         } catch (SQLException | ClassNotFoundException e) {
-            resp.sendError(500,"Internal server error: " + e.getMessage());
+            resp.sendError(500, "Internal server error: " + e.getMessage());
         }
     }
 
@@ -62,18 +62,17 @@ public class ToDoItemServlet extends HttpServlet {
         try {
             String id = req.getParameter("id");
             String response = null;
-            if(id == null){
+            if (id == null) {
                 List<ToDoItem> toDoItems = toDoItemService.readToDoItem();
                 response = ObjectMapperConfiguration.getObjectMapper().writeValueAsString(toDoItems);
 
-            }
-            else{
+            } else {
                 resp.getWriter().print("No such id found!");
             }
             resp.getWriter().print(response);
 
         } catch (SQLException | ClassNotFoundException e) {
-            resp.sendError(500,"Internal server error: " + e.getMessage());
+            resp.sendError(500, "Internal server error: " + e.getMessage());
         }
     }
 }
